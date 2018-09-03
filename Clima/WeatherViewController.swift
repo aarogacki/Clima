@@ -32,6 +32,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        locationManager.delegate = nil
     }
     
     
@@ -44,6 +45,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
             response in
             if response.result.isSuccess {
                 print("Sucess! Got the weather data")
+                let weatherJSON : JSON = JSON(response.result.value!)
+                self.updateWeatherData(json: weatherJSON)
             } else {
                 print("Error \(response.result.error)")
                 self.cityLabel.text = "Connection Issues"
@@ -56,11 +59,10 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     //MARK: - JSON Parsing
     /***************************************************************/
-   
-    
-    //Write the updateWeatherData method here:
-    
 
+    func updateWeatherData(json : JSON) {
+        let tempResult = json["main"]["temp"]
+    }
     
     
     
